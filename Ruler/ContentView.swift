@@ -9,8 +9,25 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        ZStack {
+            Path {path in
+                path.move(to: CGPoint(x: 100, y: 100))
+                path.addLine(to: CGPoint(x: 300, y: 100))
+                path.addLine(to: CGPoint(x: 100, y: 300))
+                path.addLine(to: CGPoint(x: 300, y: 300))
+                path.closeSubpath()
+            }
+            .fill(Color.red)
+            
+            Path {path in
+                path.move(to: CGPoint(x: 100, y: 100))
+                path.addLine(to: CGPoint(x: 300, y: 100))
+                path.addLine(to: CGPoint(x: 100, y: 300))
+                path.addLine(to: CGPoint(x: 300, y: 300))
+                path.closeSubpath()
+            }
+            .stroke(Color.blue, style: StrokeStyle(lineWidth: 20, lineJoin: .round))
+        }
     }
 }
 
