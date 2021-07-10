@@ -8,25 +8,35 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State var mm_px: CGFloat = 0.0
+    
     var body: some View {
         ZStack {
-            Path {path in
-                path.move(to: CGPoint(x: 100, y: 100))
-                path.addLine(to: CGPoint(x: 300, y: 100))
-                path.addLine(to: CGPoint(x: 100, y: 300))
-                path.addLine(to: CGPoint(x: 300, y: 300))
-                path.closeSubpath()
+            ForEach(0 ..< 100) {i in
+                if (i % 10 == 0) {
+                    Path {path in
+                        path.move(to: CGPoint(x: 0, y: 100 + CGFloat(i) * mm_px))
+                        path.addLine(to: CGPoint(x: 100, y: 100 + CGFloat(i) * mm_px))
+                    }
+                    .stroke(Color.red)
+                }
+                else {
+                    Path {path in
+                        path.move(to: CGPoint(x: 0, y: 100 + CGFloat(i) * mm_px))
+                        path.addLine(to: CGPoint(x: 50, y: 100 + CGFloat(i) * mm_px))
+                    }
+                    .stroke(Color.red)
+                }
             }
-            .fill(Color.red)
             
-            Path {path in
-                path.move(to: CGPoint(x: 100, y: 100))
-                path.addLine(to: CGPoint(x: 300, y: 100))
-                path.addLine(to: CGPoint(x: 100, y: 300))
-                path.addLine(to: CGPoint(x: 300, y: 300))
-                path.closeSubpath()
+            VStack {
+                Text("\(mm_px)")
             }
-            .stroke(Color.blue, style: StrokeStyle(lineWidth: 20, lineJoin: .round))
+        }
+        .onAppear {
+            let w = UIScreen.main.bounds.width
+            let h = UIScreen.main.bounds.height
+            mm_px = sqrt(w * w + h * h) / 6.1 / 25.4
         }
     }
 }
